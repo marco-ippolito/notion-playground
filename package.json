@@ -1,0 +1,24 @@
+{
+  "name": "notion-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marco-ippolito/notion-playground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marco-ippolito/notion-playground/issues"
+  },
+  "homepage": "https://github.com/marco-ippolito/notion-playground#readme",
+  "dependencies": {
+    "@notionhq/client": "^2.2.2",
+    "dotenv": "^16.0.3"
+  }
+}
