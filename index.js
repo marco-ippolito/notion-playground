@@ -14,6 +14,8 @@ async function run() {
     "utf-8"
   );
 
+  const transcriptionBlock = splitTranscription(transcription, 2000);
+
   const databases = await notion.search({
     query: "DATABASE NAME?",
     filter: {
@@ -22,9 +24,7 @@ async function run() {
     },
   });
 
-  console.log(JSON.stringify(databases, null, 2));
-
-  const pageCreation = await notion.pages.create({
+  await notion.pages.create({
     parent: {
       type: "database_id",
       database_id: databases.results[0].id,
@@ -49,13 +49,7 @@ async function run() {
         ],
       },
       Transcription: {
-        rich_text: [
-          {
-            text: {
-              content: transcription,
-            },
-          },
-        ],
+        rich_text: transcriptionBlocks(transcriptionBlock),
       },
       Video: {
         files: [
@@ -68,6 +62,26 @@ async function run() {
         ],
       },
     },
+  });
+}
+
+function splitTranscription(transcription, max_char) {
+  const arr = [];
+
+  for (let i = 0; i < transcription.length; i += max_char) {
+    arr.push(transcription.substring(i, i + max_char));
+  }
+
+  return arr;
+}
+
+function transcriptionBlocks(transcriptionBlock) {
+  return transcriptionBlock.map((content) => {
+    return {
+      text: {
+        content: content,
+      },
+    };
   });
 }
 
